@@ -68,6 +68,7 @@ export const Separator = styled.Text`
 export const SmallText = styled.Text`
   font-size: 12px;
   color: #8f8f91;
+  margin-bottom: 20px;
 `;
 export const LinkText = styled.Text`
   font-size: 12px;
@@ -92,6 +93,7 @@ export const SignInButton = styled.TouchableOpacity.attrs({
   border-color: #e6e6e6;
   border-radius: 2px;
   font-size: 12px;
+  background-color: #fff;
 `;
 
 export const Bookmark = styled(Feather)`

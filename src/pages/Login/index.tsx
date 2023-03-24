@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons';
 
