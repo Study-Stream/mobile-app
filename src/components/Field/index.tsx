@@ -16,7 +16,7 @@ const Field = (
     <TextInput
       {...props}
       style={{
-        borderRadius: 50,
+        borderRadius: 10,
         color: '#f0f',
         paddingHorizontal: 10,
         height: 42,
