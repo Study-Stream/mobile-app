@@ -16,15 +16,15 @@ const Field = (
     <TextInput
       {...props}
       style={{
-        borderRadius: 100,
+        borderRadius: 50,
         color: '#f0f',
         paddingHorizontal: 10,
         height: 42,
         width: '78%',
         marginVertical: 10,
-        backgroundColor: '#F7F3E3',
+        backgroundColor: '#FAF9F6',
       }}
-      placeholderTextColor="green"
+      placeholderTextColor="black"
     />
   );
 };
