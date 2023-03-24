@@ -1,8 +1,8 @@
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import { Feather } from '@expo/vector-icons';
-import styled from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import styled from 'styled-components/native';
 
 export const GradientBackground = styled(LinearGradient).attrs({
   colors: ['#0000FF', '#4B0082', '#8B008B'],
