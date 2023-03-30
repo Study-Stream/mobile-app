@@ -16,3 +16,6 @@ web-report/
 
 package-lock.json
 yarn.lock
+
+
+.env
