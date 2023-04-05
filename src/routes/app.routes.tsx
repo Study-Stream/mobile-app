@@ -10,7 +10,8 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeButtom from '../components/HomeButton';
-import CourseJoin from '../pages/Course-Join';
+import CreateCourse from '../pages/Courses/Create-Course';
+import CourseJoin from '../pages/Courses/Join-Course';
 import Discover from '../pages/Discover';
 import Home from '../pages/Home';
 import Inbox from '../pages/Inbox';

@@ -7,14 +7,14 @@ import AppRoutes from './routes/app.routes';
 
 const Routes: React.FC = () => {
   return (
-    <Auth0Provider
-      domain={`${process.env.DOMAIN_KEY}`}
-      clientId={`${process.env.CLIENT_ID}`}
-    >
-      <NavigationContainer>
-        <AppRoutes />
-      </NavigationContainer>
-    </Auth0Provider>
+    // <Auth0Provider
+    //   domain={`${process.env.DOMAIN_KEY}`}
+    //   clientId={`${process.env.CLIENT_ID}`}
+    // >
+    <NavigationContainer>
+      <AppRoutes />
+    </NavigationContainer>
+    // </Auth0Provider>
   );
 };
 

@@ -19,8 +19,8 @@ import {
 } from './styles';
 
 const Login: React.FC = () => {
-  const { authorize } = useAuth0();
-  const { clearSession } = useAuth0();
+  // const { authorize } = useAuth0();
+  // const { clearSession } = useAuth0();
   const [email, setEmail] = useState('');
   const [passWord, setPassword] = useState('');
 
