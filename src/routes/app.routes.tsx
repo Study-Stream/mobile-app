@@ -10,6 +10,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeButtom from '../components/HomeButton';
+import CourseJoin from '../pages/Course-Join';
 import Discover from '../pages/Discover';
 import Home from '../pages/Home';
 import Inbox from '../pages/Inbox';
@@ -38,7 +39,8 @@ const AppRoutes: React.FC = () => {
   }
 
   return (
-    <Login />
+    // <Login />
+    <CourseJoin />
     // <Tab.Navigator
     //   shifting={false}
     //   barStyle={{
