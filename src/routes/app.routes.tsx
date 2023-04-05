@@ -10,9 +10,11 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeButtom from '../components/HomeButton';
+import CourseJoin from '../pages/Course-Join';
 import Discover from '../pages/Discover';
 import Home from '../pages/Home';
 import Inbox from '../pages/Inbox';
+import Login from '../pages/Login';
 import Me from '../pages/Me';
 import Record from '../pages/Record';
 
@@ -37,80 +39,82 @@ const AppRoutes: React.FC = () => {
   }
 
   return (
-    <Tab.Navigator
-      shifting={false}
-      barStyle={{
-        backgroundColor: home ? '#000' : '#fff',
-      }}
-      initialRouteName="Home"
-      activeColor={home ? '#fff' : '#000'}
-    >
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        listeners={{
-          focus: () => setHome(true),
-          blur: () => setHome(false),
-        }}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="home" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Discover"
-        component={Discover}
-        options={{
-          tabBarLabel: 'Discover',
-          tabBarIcon: ({ color }) => (
-            <AntDesign name="search1" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Live"
-        component={Record}
-        listeners={({ navigation }) => ({
-          tabPress: e => {
-            // Prevent default action
-            e.preventDefault();
+    // <Login />
+    <CourseJoin />
+    // <Tab.Navigator
+    //   shifting={false}
+    //   barStyle={{
+    //     backgroundColor: home ? '#000' : '#fff',
+    //   }}
+    //   initialRouteName="Home"
+    //   activeColor={home ? '#fff' : '#000'}
+    // >
+    //   <Tab.Screen
+    //     name="Home"
+    //     component={Home}
+    //     listeners={{
+    //       focus: () => setHome(true),
+    //       blur: () => setHome(false),
+    //     }}
+    //     options={{
+    //       tabBarLabel: 'Home',
+    //       tabBarIcon: ({ color }) => (
+    //         <FontAwesome name="home" size={24} color={color} />
+    //       ),
+    //     }}
+    //   />
+    //   <Tab.Screen
+    //     name="Discover"
+    //     component={Discover}
+    //     options={{
+    //       tabBarLabel: 'Discover',
+    //       tabBarIcon: ({ color }) => (
+    //         <AntDesign name="search1" size={24} color={color} />
+    //       ),
+    //     }}
+    //   />
+    //   <Tab.Screen
+    //     name="Live"
+    //     component={Record}
+    //     listeners={({ navigation }) => ({
+    //       tabPress: e => {
+    //         // Prevent default action
+    //         e.preventDefault();
 
-            // Do something with the `navigation` object
-            navigation.navigate('Record');
-          },
-        })}
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: () => <HomeButtom home={home} />,
-        }}
-      />
-      <Tab.Screen
-        name="Inbox"
-        component={Inbox}
-        options={{
-          tabBarLabel: 'Inbox',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="message-text-outline"
-              size={24}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Me"
-        component={Me}
-        options={{
-          tabBarLabel: 'Me',
-          tabBarIcon: ({ color }) => (
-            <AntDesign name="user" size={24} color={color} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+    //         // Do something with the `navigation` object
+    //         navigation.navigate('Record');
+    //       },
+    //     })}
+    //     options={{
+    //       tabBarLabel: '',
+    //       tabBarIcon: () => <HomeButtom home={home} />,
+    //     }}
+    //   />
+    //   <Tab.Screen
+    //     name="Inbox"
+    //     component={Inbox}
+    //     options={{
+    //       tabBarLabel: 'Inbox',
+    //       tabBarIcon: ({ color }) => (
+    //         <MaterialCommunityIcons
+    //           name="message-text-outline"
+    //           size={24}
+    //           color={color}
+    //         />
+    //       ),
+    //     }}
+    //   />
+    //   <Tab.Screen
+    //     name="Me"
+    //     component={Me}
+    //     options={{
+    //       tabBarLabel: 'Me',
+    //       tabBarIcon: ({ color }) => (
+    //         <AntDesign name="user" size={24} color={color} />
+    //       ),
+    //     }}
+    //   />
+    // </Tab.Navigator>
   );
 };
 
