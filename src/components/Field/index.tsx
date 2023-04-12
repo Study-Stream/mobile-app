@@ -20,7 +20,7 @@ const Field = (
         color: '#f0f',
         paddingHorizontal: 10,
         height: 42,
-        width: '78%',
+        width: '100%',
         marginVertical: 10,
         backgroundColor: '#FAF9F6',
       }}

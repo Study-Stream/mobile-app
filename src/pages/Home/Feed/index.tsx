@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image, Animated, Easing } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Image, Animated, Easing, Alert } from 'react-native';
 
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Video } from 'expo-av';
@@ -20,6 +20,9 @@ import {
   TextAction,
 } from './styles';
 
+import YoutubePlayer from "react-native-youtube-iframe";
+
+
 interface Item {
   id: number;
   username: string;
@@ -36,6 +39,19 @@ interface Props {
 }
 
 const Feed: React.FC<Props> = ({ play, item }) => {
+  const [playing, setPlaying] = useState(false);
+
+  const onStateChange = useCallback((state: string) => {
+    if (state === "ended") {
+      setPlaying(false);
+      Alert.alert("video has finished playing!");
+    }
+  }, []);
+
+  const togglePlaying = useCallback(() => {
+    setPlaying((prev) => !prev);
+  }, []);
+  
   const spinValue = new Animated.Value(0);
 
   Animated.loop(
