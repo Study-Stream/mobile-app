@@ -4,9 +4,7 @@ import { Image, Animated, Easing, Alert } from 'react-native';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Video } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
-import Lottie from 'lottie-react-native';
 
-import musicFly from '../../../assets/lottie-animations/music-fly.json';
 
 import {
   Container,
@@ -19,8 +17,8 @@ import {
   BoxAction,
   TextAction,
 } from './styles';
+import { getVideoUri } from '../../../api';
 
-import YoutubePlayer from "react-native-youtube-iframe";
 
 
 interface Item {
@@ -39,6 +37,13 @@ interface Props {
 }
 
 const Feed: React.FC<Props> = ({ play, item }) => {
+
+  const [ videoURL, setVideoURL ] = useState<string>('');
+
+  getVideoUri(item.uri).then((response) => {
+    setVideoURL(response.video);
+  });
+
   const [playing, setPlaying] = useState(false);
 
   const onStateChange = useCallback((state: string) => {
@@ -63,11 +68,6 @@ const Feed: React.FC<Props> = ({ play, item }) => {
     }),
   ).start();
 
-  // const rotateProp = spinValue.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: ['0deg', '360deg'],
-  // });
-
   return (
     <>
       <LinearGradient
@@ -82,9 +82,9 @@ const Feed: React.FC<Props> = ({ play, item }) => {
       />
       <Container>
         <Video
-          source={{ uri: item.uri }}
+          source={{ uri: videoURL }}
           rate={1.0}
-          volume={1.0}
+          volume={100.0}
           isMuted={false}
           resizeMode="cover"
           shouldPlay={play}
@@ -97,7 +97,7 @@ const Feed: React.FC<Props> = ({ play, item }) => {
       </Container>
       <Details>
         <User>{item.username}</User>
-        <Tags>{item.tags}</Tags>
+        {/* <Tags>{item.tags}</Tags> */}
         <MusicBox>
           <FontAwesome name="music" size={15} color="#f5f5f5" />
           <Music>{item.music}</Music>
@@ -112,55 +112,6 @@ const Feed: React.FC<Props> = ({ play, item }) => {
             color="#fff"
           />
           <TextAction>{item.likes}</TextAction>
-        </BoxAction>
-        <BoxAction>
-          <FontAwesome
-            style={{ alignSelf: 'center' }}
-            name="commenting"
-            size={35}
-            color="#fff"
-          />
-          <TextAction>{item.comments}</TextAction>
-        </BoxAction>
-        <BoxAction>
-          <FontAwesome
-            style={{ alignSelf: 'center' }}
-            name="whatsapp"
-            size={35}
-            color="#06d755"
-          />
-          <TextAction>Share</TextAction>
-        </BoxAction>
-        <BoxAction>
-          <Animated.View
-            style={{
-              borderRadius: 50,
-              borderWidth: 12,
-              borderColor: '#292929',
-              // transform: [
-              //   {
-              //     rotate: play ? rotateProp : 0,
-              //   },
-              // ],
-            }}
-          >
-            <Image
-              style={{
-                width: 35,
-                height: 35,
-                borderRadius: 25,
-              }}
-              source={{
-                uri: 'https://avatars3.githubusercontent.com/u/45601574',
-              }}
-            />
-          </Animated.View>
-
-          <Lottie
-            source={musicFly}
-            progress={play ? spinValue : 0}
-            style={{ width: 150, position: 'absolute', bottom: 0, right: 0 }}
-          />
         </BoxAction>
       </Actions>
       <LinearGradient

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
-import Field from '../../components/Field';
 import { Container, Title, SmallText, MainContent } from './styles';
 import { Button, Text } from 'react-native-paper';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-
-import { createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons';
+import { useAuth0 } from 'react-native-auth0';
+import { getCourses, getUserDb } from '../../api';
+
 function getRandomHexColor(): string {
   const getRandomInt = (min: number, max: number): number => {
     min = Math.ceil(min);
@@ -16,32 +16,10 @@ function getRandomHexColor(): string {
   };
 
   const randomColor = `#${(
-    "000000" +
-    getRandomInt(0, 0xffffff).toString(16)
+    '000000' + getRandomInt(0, 0xffffff).toString(16)
   ).slice(-6)}`;
   return randomColor;
 }
-
-const cards = [
-  {
-    id: 1,
-    color: getRandomHexColor(),
-    courseName: 'Intro to Machine Learning',
-    courseNumber: 'CS 4375',
-  },
-  {
-    id: 2,
-    color: getRandomHexColor(),
-    courseName: 'Computer Networks',
-    courseNumber: 'CS 4390',
-  },
-  {
-    id: 1,
-    color: getRandomHexColor(),
-    courseName: 'Operating Systems',
-    courseNumber: 'CS 4348',
-  },
-];
 
 const styles = StyleSheet.create({
   scrollableCardView: {
@@ -75,10 +53,22 @@ const styles = StyleSheet.create({
 });
 
 const CourseDashboard: React.FC = () => {
-  // better way to write this, but will change this later
-  const numCards = cards.length;
+  const { user } = useAuth0();
+  const [courses, setCourses] = useState<any>([]);
+  useEffect(() => {
+    getUserDb(user.email).then(res => {
+      console.log('CourseDashboard-user:', res.courses);
+      getCourses(res.courses).then(courses => {
+        console.log('CourseDashboard-courses:', courses);
+        setCourses(courses.courses);
+      });
+    });
+  }, [user]);
+
+  const numCards = courses.length;
   const numRows = Math.ceil(numCards / 2);
   const navigation = useNavigation();
+
   const Card = ({ color, courseName, courseNumber }: any) => {
     return (
       <View style={[styles.card, { backgroundColor: color }]}>
@@ -108,6 +98,7 @@ const CourseDashboard: React.FC = () => {
       </View>
     );
   };
+
   return (
     <>
       <Container>
@@ -146,14 +137,17 @@ const CourseDashboard: React.FC = () => {
 
                 return (
                   <View style={styles.row} key={rowIndex}>
-                    {cards.slice(startIndex, endIndex).map(card => (
-                      <Card
-                        key={card.id}
-                        color={card.color}
-                        courseName={card.courseName}
-                        courseNumber={card.courseNumber}
-                      />
-                    ))}
+                    {courses.slice(startIndex, endIndex).map((card: any) => {
+                      console.log('card', card);
+                      return (
+                        <Card
+                          key={card.id}
+                          color={getRandomHexColor()}
+                          courseName={card.course_name}
+                          courseNumber={card.course_number}
+                        />
+                      );
+                    })}
                     {endIndex - startIndex === 1 && (
                       <View style={styles.card} />
                     )}

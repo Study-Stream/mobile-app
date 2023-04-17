@@ -7,13 +7,28 @@ import { Container, Title, SmallText } from './styles';
 import { MainContent } from '../Join-Course/styles';
 import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { createCourse, getUserDb, joinCourse } from '../../api';
+import { useAuth0 } from 'react-native-auth0';
 
 const CourseCreate: React.FC = () => {
   const navigation = useNavigation();
+  const { user } = useAuth0();
   // better way to write this, but will change this later
-  const [course, setCourseName] = useState('');
+  const [courseName, setCourseName] = useState('');
   const [courseNumber, setCourseNumber] = useState('');
   const [courseDescription, setCourseDescription] = useState('');
+
+  const createCourseandJoin = async () => {
+    await createCourse(courseName, courseNumber, courseDescription).then(
+      async ({course}: any) => {
+        // joinCourse
+        await joinCourse(user.email, course.join_code).then((res: any) => {
+          console.log("Join Course: ", res)
+          navigation.navigate('CourseDashboard');
+        });
+      },
+    );
+  };
 
   return (
     <Container>
@@ -38,7 +53,7 @@ const CourseCreate: React.FC = () => {
           />
           <Button
             mode="contained"
-            onPress={() => console.log('Pressed')}
+            onPress={createCourseandJoin}
             color="#000"
             labelStyle={{ color: '#fff' }}
             style={{

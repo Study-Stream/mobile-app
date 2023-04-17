@@ -4,17 +4,29 @@ import Field from '../../components/Field';
 import { Container, Title, SmallText, MainContent } from './styles';
 import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { joinCourse } from '../../api';
+import { useAuth0 } from 'react-native-auth0';
 
 const CourseJoin: React.FC = () => {
   const navigation = useNavigation();
-  // better way to write this, but will change this later
+  const { user } = useAuth0();
+
   const [joinCode, setJoinCode] = useState('');
+
+  // function to join course
+  const joinCourseHelper = async () => {
+    console.log('Joining Course: ', joinCode, user.email);
+
+    await joinCourse(user.email, joinCode).then(res => {
+      navigation.navigate('CourseDashboard');
+    });
+  };
 
   return (
     <>
       <Container>
         <ScrollView>
-          <MainContent style={{ marginTop: 15}}>
+          <MainContent style={{ marginTop: 15 }}>
             <Title>Join Course 🍎</Title>
             <SmallText>
               If you have a join code, enter it below and join the class
@@ -25,7 +37,7 @@ const CourseJoin: React.FC = () => {
             />
             <Button
               mode="contained"
-              onPress={() => navigation.navigate('CourseJoin')}
+              onPress={joinCourseHelper}
               color="#000"
               labelStyle={{ color: '#fff' }}
               style={{
