@@ -19,8 +19,10 @@ const CourseCreate: React.FC = () => {
   const [courseDescription, setCourseDescription] = useState('');
 
   const createCourseandJoin = async () => {
-    await createCourse(courseName, courseNumber, courseDescription).then(
+    console.log("Create Course and Join triggered", courseName, courseNumber, courseDescription)
+    return await createCourse(courseName, courseNumber, courseDescription).then(
       async ({course}: any) => {
+        console.log("Course Created: ", course)
         // joinCourse
         await joinCourse(user.email, course.join_code).then((res: any) => {
           console.log("Join Course: ", res)

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, View, StyleSheet } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ScrollView, View, StyleSheet, RefreshControl } from 'react-native';
 import { Container, Title, SmallText, MainContent } from './styles';
 import { Button, Text } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons';
 import { useAuth0 } from 'react-native-auth0';
@@ -55,6 +55,26 @@ const styles = StyleSheet.create({
 const CourseDashboard: React.FC = () => {
   const { user } = useAuth0();
   const [courses, setCourses] = useState<any>([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getUserDb(user.email).then(res => {
+      console.log('CourseDashboard-user:', res.courses);
+      getCourses(res.courses).then(courses => {
+        console.log('CourseDashboard-courses:', courses);
+        setCourses(courses.courses);
+        setRefreshing(false);
+      });
+    });
+  }, [user]);
+
+  useFocusEffect(
+    useCallback(() => {
+      onRefresh();
+    }, [onRefresh]),
+  );
+
   useEffect(() => {
     getUserDb(user.email).then(res => {
       console.log('CourseDashboard-user:', res.courses);
@@ -69,10 +89,19 @@ const CourseDashboard: React.FC = () => {
   const numRows = Math.ceil(numCards / 2);
   const navigation = useNavigation();
 
-  const Card = ({ color, courseName, courseNumber }: any) => {
+  const Card = ({
+    color,
+    courseName,
+    courseNumber,
+    courseId,
+    joinCode,
+  }: any) => {
+    console.log(courseId);
     return (
       <View style={[styles.card, { backgroundColor: color }]}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Home', { courseId: courseId })}
+        >
           <Text
             style={{
               color: 'white',
@@ -94,6 +123,26 @@ const CourseDashboard: React.FC = () => {
           >
             {courseNumber}
           </Text>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 14,
+              fontWeight: '400',
+              textAlign: 'center',
+              marginTop: 10,
+            }}
+          >
+            Join Code:{' '}
+            <Text
+              style={{
+                fontWeight: '800',
+                color: 'white',
+                textDecorationLine: 'underline',
+              }}
+            >
+              {joinCode}
+            </Text>
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -102,7 +151,11 @@ const CourseDashboard: React.FC = () => {
   return (
     <>
       <Container>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
           <MainContent>
             <View
               style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}
@@ -138,13 +191,15 @@ const CourseDashboard: React.FC = () => {
                 return (
                   <View style={styles.row} key={rowIndex}>
                     {courses.slice(startIndex, endIndex).map((card: any) => {
-                      console.log('card', card);
+                      console.log('card-id', card.id);
                       return (
                         <Card
-                          key={card.id}
+                          key={card._id}
                           color={getRandomHexColor()}
                           courseName={card.course_name}
                           courseNumber={card.course_number}
+                          courseId={card._id}
+                          joinCode={card.join_code}
                         />
                       );
                     })}

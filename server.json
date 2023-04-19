@@ -7,7 +7,7 @@
       "music": "Introducing Chromecast. The easiest way to enjoy",
       "likes": 9444,
       "comments": 6340,
-      "uri": "https://www.youtube.com/watch?v=41vETgarh_8&t=1s"
+      "url": "https://www.youtube.com/watch?v=41vETgarh_8&t=1s"
     },
     {
       "id": 1,
@@ -16,7 +16,7 @@
       "music": "HBO GO now works with Chromecast",
       "likes": 8411,
       "comments": 2240,
-      "uri": "https://www.youtube.com/watch?v=BBJa32lCaaY"
+      "url": "https://www.youtube.com/watch?v=BBJa32lCaaY"
     }
   ]
 }

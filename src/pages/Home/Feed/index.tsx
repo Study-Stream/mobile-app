@@ -1,10 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image, Animated, Easing, Alert } from 'react-native';
 
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Video } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
-
 
 import {
   Container,
@@ -18,8 +17,6 @@ import {
   TextAction,
 } from './styles';
 import { getVideoUri } from '../../../api';
-
-
 
 interface Item {
   id: number;
@@ -36,37 +33,33 @@ interface Props {
   item: Item;
 }
 
-const Feed: React.FC<Props> = ({ play, item }) => {
+const Feed: React.FC<Props> = ({ play, item }: any) => {
+  console.log('From feed: ', item);
 
-  const [ videoURL, setVideoURL ] = useState<string>('');
-
-  getVideoUri(item.uri).then((response) => {
-    setVideoURL(response.video);
-  });
 
   const [playing, setPlaying] = useState(false);
 
   const onStateChange = useCallback((state: string) => {
-    if (state === "ended") {
+    if (state === 'ended') {
       setPlaying(false);
-      Alert.alert("video has finished playing!");
+      Alert.alert('video has finished playing!');
     }
   }, []);
 
   const togglePlaying = useCallback(() => {
-    setPlaying((prev) => !prev);
+    setPlaying(prev => !prev);
   }, []);
-  
-  const spinValue = new Animated.Value(0);
 
-  Animated.loop(
-    Animated.timing(spinValue, {
-      toValue: 1,
-      duration: 10000,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }),
-  ).start();
+  // const spinValue = new Animated.Value(0);
+
+  // Animated.loop(
+  //   Animated.timing(spinValue, {
+  //     toValue: 1,
+  //     duration: 10000,
+  //     easing: Easing.linear,
+  //     useNativeDriver: true,
+  //   }),
+  // ).start();
 
   return (
     <>
@@ -82,7 +75,7 @@ const Feed: React.FC<Props> = ({ play, item }) => {
       />
       <Container>
         <Video
-          source={{ uri: videoURL }}
+          source={{ uri: item.url }}
           rate={1.0}
           volume={100.0}
           isMuted={false}
@@ -93,15 +86,17 @@ const Feed: React.FC<Props> = ({ play, item }) => {
             width: '100%',
             height: '100%',
           }}
+          onError={error => console.log('Video Error: ', error)}
+
         />
       </Container>
       <Details>
-        <User>{item.username}</User>
+        {/* <User>{item.username}</User> */}
         {/* <Tags>{item.tags}</Tags> */}
-        <MusicBox>
+        {/* <MusicBox>
           <FontAwesome name="music" size={15} color="#f5f5f5" />
           <Music>{item.music}</Music>
-        </MusicBox>
+        </MusicBox> */}
       </Details>
       <Actions>
         <BoxAction>
@@ -111,7 +106,7 @@ const Feed: React.FC<Props> = ({ play, item }) => {
             size={35}
             color="#fff"
           />
-          <TextAction>{item.likes}</TextAction>
+          <TextAction>200</TextAction>
         </BoxAction>
       </Actions>
       <LinearGradient

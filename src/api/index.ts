@@ -1,8 +1,8 @@
 var myHeaders = new Headers();
 myHeaders.append('Content-Type', 'application/json');
 
-const api_url = 'http://03c4-2600-1700-70d0-264f-bc82-925c-208c-d49c.ngrok-free.app';
-
+// const api_url = 'http://3059-2600-1700-70d0-264f-bc82-925c-208c-d49c.ngrok-free.app';
+const api_url = 'http://localhost:3000';
 
 export const getUserDb = async (email: any) => {
   return await fetch(`${api_url}/users?email=${email}`, {
@@ -33,6 +33,7 @@ export const createCourse = async (courseName: any, courseNumber: any, courseDes
     }),
     redirect: 'follow',
   }).then(response => response.json())
+  .catch(error => console.log('error', error));
 }
 
 export const getCourses = async (courseIds: any) => {
@@ -54,4 +55,14 @@ export const getVideoUri = async (video_url: string) => {
     redirect: 'follow'
   })
     .then(response => response.json());
+}
+
+
+export const getCourseVideos = async (courseId: any) => {
+    return await fetch(`${api_url}/courses/${courseId}`,  {
+    method: 'GET',
+    redirect: 'follow'
+  })
+    .then(response => response.json());
+
 }
