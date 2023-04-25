@@ -6,12 +6,15 @@ import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { joinCourse } from '../../api';
 import { useAuth0 } from 'react-native-auth0';
+import Loading from '../../components/Loading';
 
 const CourseJoin: React.FC = () => {
   const navigation = useNavigation();
   const { user } = useAuth0();
 
   const [joinCode, setJoinCode] = useState('');
+
+  const [loading, setLoading] = useState(false);
 
   // function to join course
   const joinCourseHelper = async () => {
@@ -25,6 +28,7 @@ const CourseJoin: React.FC = () => {
   return (
     <>
       <Container>
+        <Loading isVisible={loading} />
         <ScrollView>
           <MainContent style={{ marginTop: 15 }}>
             <Title>Join Course 🍎</Title>

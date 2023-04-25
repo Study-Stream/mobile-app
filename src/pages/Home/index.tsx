@@ -8,11 +8,13 @@ import Feed from './Feed';
 
 import { Container, Header, Text, Tab, Separator } from './styles';
 import { getCourseVideos, getVideoUri } from '../../api';
+import Loading from '../../components/Loading';
 
 const Home = ({ route }: any) => {
   const { courseId } = route.params;
   const [active, setActive] = useState(0);
   const [posts, setPosts] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
 
   const getPosts = async () => {
     getCourseVideos(courseId).then(async (res) => {
@@ -32,6 +34,7 @@ const Home = ({ route }: any) => {
 
   return (
     <Container>
+      <Loading isVisible={loading} />
       <ViewPager
         onPageSelected={e => {
           setActive(e.nativeEvent.position);

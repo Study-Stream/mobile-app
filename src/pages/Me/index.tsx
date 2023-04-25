@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 
 import { MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons';
@@ -22,10 +22,14 @@ import {
   ProfileText,
   Bookmark,
 } from './styles';
+import Loading from '../../components/Loading';
 
 const Me: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  
   return (
     <Container>
+      <Loading isVisible={loading} />
       <Header>
         <AntDesign
           style={{ position: 'absolute', left: 10, top: 10 }}

@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, View, StyleSheet, Text } from 'react-native';
 import { useAuth0 } from 'react-native-auth0';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button } from 'react-native-paper';
 import { Video } from 'expo-av';
 import { getUserDb } from '../../api';
+import Loading from '../../components/Loading';
 
 const styles = StyleSheet.create({
   container: {
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
 
 const Login: React.FC = () => {
   const { authorize, clearSession, user, getCredentials} = useAuth0();
+  const [loading, setLoading] = useState(false);
 
   const onLogin = async () => {
     try {
@@ -109,6 +111,7 @@ const Login: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <Loading isVisible={loading} />
       <Video
         source={{
           uri:

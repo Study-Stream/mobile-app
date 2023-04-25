@@ -66,3 +66,11 @@ export const getCourseVideos = async (courseId: any) => {
     .then(response => response.json());
 
 }
+
+export const deleteCourse = async (courseId: any) => {
+  return await fetch(`${api_url}/courses/${courseId}`,  {
+  // delete course code
+})
+  .then(response => response.json());
+
+}
