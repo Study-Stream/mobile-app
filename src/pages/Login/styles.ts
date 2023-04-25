@@ -76,7 +76,7 @@ export const LinkText = styled.Text`
 `;
 
 export const SignInColumn = styled.View`
-  align-items: start;
+  align-items: flex-start;
   flex-direction: row;
   padding: 10px;
 `;
