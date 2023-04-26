@@ -21,6 +21,7 @@ import Record from '../pages/Record';
 import CourseDashboard from '../pages/CourseDashboard';
 import { useAuth0 } from 'react-native-auth0';
 import CreateCourse from '../pages/Create-Course';
+import CreatePostScreen from '../pages/CreatePost';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -95,15 +96,15 @@ const AppRoutes: React.FC = () => {
       />
       {/* <Tab.Screen name="Home" component={Home} /> */}
       <Tab.Screen
-        name="Live"
-        component={Record}
+        name="CreatePost"
+        component={CreatePostScreen}
         listeners={({ navigation }) => ({
           tabPress: e => {
             // Prevent default action
             e.preventDefault();
 
             // Do something with the `navigation` object
-            navigation.navigate('Record');
+            navigation.navigate('CreatePost');
           },
         })}
         options={{
@@ -144,8 +145,8 @@ const RootStackScreen: React.FC = () => {
           />
           <Stack.Screen
             options={{ headerShown: false }}
-            name="Record"
-            component={Record}
+            name="CreatePost"
+            component={CreatePostScreen}
           />
         </>
       ) : (

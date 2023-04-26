@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, View, StyleSheet, RefreshControl } from 'react-native';
 import { Container, Title, SmallText, MainContent } from './styles';
-import { Button, Text } from 'react-native-paper';
+import { Button, Text, Divider } from 'react-native-paper';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons';
@@ -183,6 +183,8 @@ const CourseDashboard: React.FC = () => {
                 <FontAwesome name="plus" size={14} />
               </Button>
             </View>
+            <Divider />
+
             <View style={styles.scrollableCardView}>
               {[...Array(numRows)].map((_, rowIndex) => {
                 const startIndex = rowIndex * 2;

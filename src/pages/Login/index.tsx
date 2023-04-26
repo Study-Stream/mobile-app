@@ -131,7 +131,7 @@ const Login: React.FC = () => {
       <View style={styles.contentContainer}>
         <Text style={styles.header}>StudyStream</Text>
         <Text style={styles.subtitle}>Learn. Stream. Repeat.</Text>
-        <Button
+        {!loggedIn ? <Button
           onPress={loggedIn ? onLogout : onLogin}
           mode="contained"
           labelStyle={{ color: 'black' }}
@@ -143,7 +143,7 @@ const Login: React.FC = () => {
           }}
         >
           Get Started
-        </Button>
+        </Button> : null}
         <Button
           onPress={onLogout }
           mode="contained"

@@ -18,7 +18,7 @@ export const Details = styled.View`
 `;
 
 export const User = styled.Text`
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
   padding: 10px 0;
   color: #fff;
@@ -26,7 +26,7 @@ export const User = styled.Text`
 
 export const Tags = styled.Text`
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
   line-height: 22px;
   padding: 5px 0;
   color: #fff;

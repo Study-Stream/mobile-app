@@ -11,6 +11,7 @@
     "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^18.0.1",
     "@react-native-community/masked-view": "0.1.6",
+    "@react-native-community/slider": "4.4.2",
     "@react-native-community/viewpager": "5.0.11",
     "@react-navigation/material-bottom-tabs": "^5.1.1",
     "@react-navigation/native": "^5.0.9",

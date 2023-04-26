@@ -4,6 +4,7 @@ import { Image, Animated, Easing, Alert } from 'react-native';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Video } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
+import Slider from '@react-native-community/slider';
 
 import {
   Container,
@@ -16,7 +17,7 @@ import {
   BoxAction,
   TextAction,
 } from './styles';
-import { getVideoUri } from '../../../api';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Item {
   id: number;
@@ -34,10 +35,12 @@ interface Props {
 }
 
 const Feed: React.FC<Props> = ({ play, item }: any) => {
-  console.log('From feed: ', item);
+  // console.log('From feed: ', item);
 
 
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(play);
+  const [progress, setProgress] = useState(0);
+
 
   const onStateChange = useCallback((state: string) => {
     if (state === 'ended') {
@@ -50,6 +53,16 @@ const Feed: React.FC<Props> = ({ play, item }: any) => {
     setPlaying(prev => !prev);
   }, []);
 
+  const handleVideoProgress = async (playbackStatus: any) => {
+    if (!playbackStatus.isLoaded) {
+      return;
+    }
+
+    if (playbackStatus.isPlaying) {
+      setProgress(playbackStatus.positionMillis / playbackStatus.durationMillis);
+    }
+    // console.log('Progress: ', progress*100, '%');
+  };
   // const spinValue = new Animated.Value(0);
 
   // Animated.loop(
@@ -74,6 +87,7 @@ const Feed: React.FC<Props> = ({ play, item }: any) => {
         }}
       />
       <Container>
+        <TouchableOpacity onPress={() => console.log("Pressed")}>
         <Video
           source={{ uri: item.url }}
           rate={1.0}
@@ -87,26 +101,33 @@ const Feed: React.FC<Props> = ({ play, item }: any) => {
             height: '100%',
           }}
           onError={error => console.log('Video Error: ', error)}
-
+          onPlaybackStatusUpdate={handleVideoProgress}
+          showsPlaybackControls={true}
         />
+        </TouchableOpacity>
       </Container>
       <Details>
-        {/* <User>{item.username}</User> */}
-        {/* <Tags>{item.tags}</Tags> */}
-        {/* <MusicBox>
-          <FontAwesome name="music" size={15} color="#f5f5f5" />
-          <Music>{item.music}</Music>
-        </MusicBox> */}
+        <User>@{item.username}</User>
+        <Tags>{item.caption}</Tags>
       </Details>
       <Actions>
         <BoxAction>
           <AntDesign
-            style={{ alignSelf: 'center' }}
-            name="heart"
+            style={{ alignSelf: 'center', color: "green" }}
+            name="caretup"
             size={35}
             color="#fff"
           />
-          <TextAction>200</TextAction>
+          <TextAction>Upvote</TextAction>
+        </BoxAction>
+        <BoxAction onPress={() => {console.log("Downvoted")}}>
+          <AntDesign
+            style={{ alignSelf: 'center', color: "red" }}
+            name="caretdown"
+            size={35}
+            color="#fff"
+          />
+          <TextAction>Downvote</TextAction>
         </BoxAction>
       </Actions>
       <LinearGradient
