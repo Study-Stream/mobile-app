@@ -11,6 +11,7 @@ import { createCourse, getUserDb, joinCourse } from '../../api';
 import { useAuth0 } from 'react-native-auth0';
 import Loading from '../../components/Loading';
 
+// create course
 const CourseCreate: React.FC = () => {
   const navigation = useNavigation();
   const { user } = useAuth0();

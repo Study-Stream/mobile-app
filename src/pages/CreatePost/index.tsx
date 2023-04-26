@@ -4,6 +4,7 @@ import { TextInput, Button, Menu, Divider } from 'react-native-paper';
 import { Container, MainContent, Title } from '../CourseDashboard/styles';
 import { ScrollView } from 'react-native-gesture-handler';
 
+// create post
 const CreatePostScreen = () => {
   const [postData, setPostData] = useState({
     course: '',
