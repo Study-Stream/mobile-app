@@ -9,6 +9,7 @@ import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { createCourse, getUserDb, joinCourse } from '../../api';
 import { useAuth0 } from 'react-native-auth0';
+import Loading from '../../components/Loading';
 
 const CourseCreate: React.FC = () => {
   const navigation = useNavigation();
@@ -17,6 +18,7 @@ const CourseCreate: React.FC = () => {
   const [courseName, setCourseName] = useState('');
   const [courseNumber, setCourseNumber] = useState('');
   const [courseDescription, setCourseDescription] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const createCourseandJoin = async () => {
     console.log("Create Course and Join triggered", courseName, courseNumber, courseDescription)
@@ -34,6 +36,7 @@ const CourseCreate: React.FC = () => {
 
   return (
     <Container>
+      <Loading isVisible={loading} />
       <ScrollView>
         <MainContent>
           <Title>Create Course 🍎</Title>

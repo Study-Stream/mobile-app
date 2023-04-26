@@ -3,11 +3,14 @@ import React, { useState } from 'react';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 
 import { Container, Search, Header, Input } from './styles';
+import Loading from '../../components/Loading';
 
 const Discover: React.FC = () => {
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(false);
   return (
     <Container>
+      <Loading isVisible={loading} />
       <Header>
         <Search>
           <AntDesign

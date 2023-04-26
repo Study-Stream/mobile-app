@@ -8,13 +8,14 @@ import Feed from './Feed';
 
 import { Container, Header, Text, Tab, Separator } from './styles';
 import { getCourseVideos, getVideoUri } from '../../api';
+import Loading from '../../components/Loading';
 import { ActivityIndicator } from 'react-native-paper';
 
 const Home = ({ route }: any) => {
   const { courseId } = route.params;
   const [active, setActive] = useState(0);
   const [posts, setPosts] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const getPosts = async () => {
     await getCourseVideos(courseId).then(async res => {
@@ -25,7 +26,7 @@ const Home = ({ route }: any) => {
         }),
       );
       setPosts(postsWithVideoUrls);
-      setIsLoading(false);
+      setLoading(false);
     });
   };
 
@@ -33,7 +34,7 @@ const Home = ({ route }: any) => {
     getPosts();
   }, []);
 
-  return isLoading ? (
+  return loading ? (
     <Container>
       <View
         style={{
@@ -60,6 +61,7 @@ const Home = ({ route }: any) => {
     </Container>
   ) : (
     <Container>
+      <Loading isVisible={loading} />
       <ViewPager
         onPageSelected={e => {
           setActive(e.nativeEvent.position);

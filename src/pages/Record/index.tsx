@@ -17,10 +17,12 @@ import {
   Button,
   Description,
 } from './styles';
+import Loading from '../../components/Loading';
 
 const Record: React.FC = () => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
   useEffect(() => {
@@ -42,6 +44,7 @@ const Record: React.FC = () => {
   return (
     <Camera style={{ flex: 1 }} type={type}>
       <Container>
+        <Loading isVisible={loading} />
         <Header>
           <Button
             onPress={() => {

@@ -33,7 +33,7 @@ export const createCourse = async (courseName: any, courseNumber: any, courseDes
     }),
     redirect: 'follow',
   }).then(response => response.json())
-  .catch(error => console.log('error', error));
+    .catch(error => console.log('error', error));
 }
 
 export const getCourses = async (courseIds: any) => {
@@ -50,7 +50,7 @@ export const getCourses = async (courseIds: any) => {
 
 export const getVideoUri = async (video_url: string) => {
 
-  return await fetch(`${api_url}/courses/video?url=${video_url}`,  {
+  return await fetch(`${api_url}/courses/video?url=${video_url}`, {
     method: 'GET',
     redirect: 'follow'
   })
@@ -59,8 +59,35 @@ export const getVideoUri = async (video_url: string) => {
 
 
 export const getCourseVideos = async (courseId: any) => {
-    return await fetch(`${api_url}/courses/${courseId}`,  {
+  return await fetch(`${api_url}/courses/${courseId}`, {
     method: 'GET',
+    redirect: 'follow'
+  })
+    .then(response => response.json());
+
+}
+
+export const deleteCourse = async (courseId: any) => {
+  return await fetch(`${api_url}/courses/${courseId}`, {
+    // delete course code
+  })
+    .then(response => response.json());
+
+}
+
+export const getUserPosts = async (email: any) => {
+  return await fetch(`${api_url}/users/posts?email=${email}`, {
+    method: 'GET',
+    redirect: 'follow'
+  })
+    .then(response => response.json());
+
+}
+
+// delete course from user
+export const deleteCourseFromUser = async (email: any, courseId: any) => {
+  return await fetch(`${api_url}/users/course/delete?email=${email}&courseId=${courseId}`, {
+    method: 'DELETE',
     redirect: 'follow'
   })
     .then(response => response.json());

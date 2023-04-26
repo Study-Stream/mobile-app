@@ -1,13 +1,22 @@
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import { Feather } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import styled from 'styled-components/native';
+
+export const GradientBackground = styled(LinearGradient).attrs({
+  colors: ['#0000FF', '#4B0082', '#8B008B'],
+  start: { x: 0, y: 0 },
+  end: { x: 0, y: 1 },
+})`
+  flex: 1;
+`;
 
 export const Container = styled.View.attrs({
   paddingTop: getStatusBarHeight(),
 })`
   flex: 1;
-  background: #fff;
+  background-color: transparent;
 `;
 
 export const Header = styled.View`
@@ -20,26 +29,21 @@ export const Header = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: 18px;
+  font-size: 32px;
   font-weight: bold;
+  color: #000;
 `;
 
 export const Content = styled.View`
   padding: 10px;
   align-items: center;
 `;
-
-export const Avatar = styled.Image`
-  align-self: center;
-  width: 140px;
-  height: 140px;
+export const MainContent = styled.View`
+  padding: 26px;
 `;
-
-export const Username = styled.Text`
-  font-size: 18px;
-  padding: 10px;
+export const FieldContainer = styled.View`
+  margin: 20px;
 `;
-
 export const Stats = styled.View`
   flex-direction: row;
   padding: 10px;
@@ -63,29 +67,36 @@ export const Separator = styled.Text`
   padding: 0 10px;
 `;
 
-export const StatsText = styled.Text`
+export const SmallText = styled.Text`
   font-size: 12px;
   color: #8f8f91;
+  margin-bottom: 20px;
+`;
+export const LinkText = styled.Text`
+  font-size: 12px;
+  color: #579aff;
 `;
 
-export const ProfileColumn = styled.View`
-  align-items: center;
+export const SignInColumn = styled.View`
+  align-items: start;
   flex-direction: row;
-  padding: 20px;
+  padding: 10px;
 `;
 
-export const ProfileText = styled.Text`
+export const SignInColumnText = styled.Text`
   font-weight: bold;
 `;
 
-export const ProfileEdit = styled.TouchableOpacity.attrs({
+export const SignInButton = styled.TouchableOpacity.attrs({
   activityOpacity: 1,
 })`
   border-width: 1.5px;
   padding: 10px 30px;
   border-color: #e6e6e6;
-  border-radius: 2px;
+  border-radius: 15px;
   font-size: 12px;
+  background-color: #fff;
+  text-align: left;
 `;
 
 export const Bookmark = styled(Feather)`
