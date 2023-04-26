@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   deleteButton: {
-    backgroundColor: '#D70040',
+    backgroundColor: '#EC386D',
   },
   closeButton: {
     backgroundColor: '#A9A9A9',
@@ -135,7 +135,8 @@ const CourseDashboard: React.FC = () => {
   const navigation = useNavigation();
 
   const [modalVisible, setModalVisible] = useState(false);
-  const DeleteCourseModal = ({ courseId }: any) => {
+  const [modalCourseId, setModalCourseId] = useState('');
+  const DeleteCourseModal = () => {
     return (
       <View>
         <Modal
@@ -152,8 +153,8 @@ const CourseDashboard: React.FC = () => {
             <Pressable
               style={[styles.modalButton, styles.deleteButton]}
               onPress={() => {
-                deleteCourse(courseId).then(res => {
-                  console.log("Course deleted", courseId)
+                deleteCourse(modalCourseId).then(res => {
+                  console.log("Course deleted", modalCourseId)
                 });
                 setModalVisible(!modalVisible);
                 }}>
@@ -201,10 +202,12 @@ const CourseDashboard: React.FC = () => {
     console.log(courseId);
     return (
       <View style={[styles.card, { backgroundColor: color }]}>
-        <DeleteCourseModal courseId={courseId} />
         <TouchableOpacity
           onPress={() => navigation.navigate('Home', { courseId: courseId })}
-          onLongPress={() => setModalVisible(true)}
+          onLongPress={() => {
+            setModalVisible(true);
+            setModalCourseId(courseId);
+          }}
         >
           <Text
             style={{
@@ -256,6 +259,7 @@ const CourseDashboard: React.FC = () => {
     <>
       <Container>
         <Loading isVisible={loading} />
+        <DeleteCourseModal />
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -300,7 +304,7 @@ const CourseDashboard: React.FC = () => {
                       return (
                       <Card
                           key={card._id}
-                        color={getRandomHexColor()}
+                          color={getRandomHexColor()}
                           courseName={card.course_name}
                           courseNumber={card.course_number}
                           courseId={card._id}

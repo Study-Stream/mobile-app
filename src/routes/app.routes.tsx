@@ -113,7 +113,11 @@ const AppRoutes: React.FC = () => {
       />
       <Tab.Screen
         name="Me"
-        component={Login}
+        component={Me}
+        listeners={{
+          focus: () => setHome(true),
+          blur: () => setHome(false),
+        }}
         options={{
           tabBarLabel: 'Me',
           tabBarIcon: ({ color }) => (

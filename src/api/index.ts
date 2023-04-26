@@ -2,7 +2,7 @@ var myHeaders = new Headers();
 myHeaders.append('Content-Type', 'application/json');
 
 // const api_url = 'http://3059-2600-1700-70d0-264f-bc82-925c-208c-d49c.ngrok-free.app';
-const api_url = 'http://localhost:3000';
+const api_url = 'http://192.168.4.54:3000';
 
 export const getUserDb = async (email: any) => {
   return await fetch(`${api_url}/users?email=${email}`, {
@@ -70,6 +70,14 @@ export const getCourseVideos = async (courseId: any) => {
 export const deleteCourse = async (courseId: any) => {
   return await fetch(`${api_url}/courses/${courseId}`,  {
   // delete course code
+})
+  .then(response => response.json());
+
+}
+
+export const getUserPosts = async (email: any) => {
+  return await fetch(`${api_url}/courses/${courseId}`,  {
+  // getUserPostsCode
 })
   .then(response => response.json());
 

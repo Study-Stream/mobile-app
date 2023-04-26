@@ -31,7 +31,7 @@ export const Content = styled.View`
 
 export const Avatar = styled.Image`
   align-self: center;
-  width: 120px;
+  width: 140px;
   height: 140px;
 `;
 
@@ -71,7 +71,7 @@ export const StatsText = styled.Text`
 export const ProfileColumn = styled.View`
   align-items: center;
   flex-direction: row;
-  padding: 10px;
+  padding: 20px;
 `;
 
 export const ProfileText = styled.Text`
