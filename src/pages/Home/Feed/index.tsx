@@ -1,12 +1,10 @@
-import React from 'react';
-import { Image, Animated, Easing } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Image, Animated, Easing, Alert } from 'react-native';
 
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { Video } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
-import Lottie from 'lottie-react-native';
-
-import musicFly from '../../../assets/lottie-animations/music-fly.json';
+import Slider from '@react-native-community/slider';
 
 import {
   Container,
@@ -19,6 +17,7 @@ import {
   BoxAction,
   TextAction,
 } from './styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Item {
   id: number;
@@ -35,22 +34,45 @@ interface Props {
   item: Item;
 }
 
-const Feed: React.FC<Props> = ({ play, item }) => {
-  const spinValue = new Animated.Value(0);
+const Feed: React.FC<Props> = ({ play, item }: any) => {
+  // console.log('From feed: ', item);
 
-  Animated.loop(
-    Animated.timing(spinValue, {
-      toValue: 1,
-      duration: 10000,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }),
-  ).start();
 
-  // const rotateProp = spinValue.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: ['0deg', '360deg'],
-  // });
+  const [playing, setPlaying] = useState(play);
+  const [progress, setProgress] = useState(0);
+
+
+  const onStateChange = useCallback((state: string) => {
+    if (state === 'ended') {
+      setPlaying(false);
+      Alert.alert('video has finished playing!');
+    }
+  }, []);
+
+  const togglePlaying = useCallback(() => {
+    setPlaying(prev => !prev);
+  }, []);
+
+  const handleVideoProgress = async (playbackStatus: any) => {
+    if (!playbackStatus.isLoaded) {
+      return;
+    }
+
+    if (playbackStatus.isPlaying) {
+      setProgress(playbackStatus.positionMillis / playbackStatus.durationMillis);
+    }
+    // console.log('Progress: ', progress*100, '%');
+  };
+  // const spinValue = new Animated.Value(0);
+
+  // Animated.loop(
+  //   Animated.timing(spinValue, {
+  //     toValue: 1,
+  //     duration: 10000,
+  //     easing: Easing.linear,
+  //     useNativeDriver: true,
+  //   }),
+  // ).start();
 
   return (
     <>
@@ -65,10 +87,11 @@ const Feed: React.FC<Props> = ({ play, item }) => {
         }}
       />
       <Container>
+        <TouchableOpacity onPress={() => console.log("Pressed")}>
         <Video
-          source={{ uri: item.uri }}
+          source={{ uri: item.url }}
           rate={1.0}
-          volume={1.0}
+          volume={100.0}
           isMuted={false}
           resizeMode="cover"
           shouldPlay={play}
@@ -77,74 +100,34 @@ const Feed: React.FC<Props> = ({ play, item }) => {
             width: '100%',
             height: '100%',
           }}
+          onError={error => console.log('Video Error: ', error)}
+          onPlaybackStatusUpdate={handleVideoProgress}
+          showsPlaybackControls={true}
         />
+        </TouchableOpacity>
       </Container>
       <Details>
-        <User>{item.username}</User>
-        <Tags>{item.tags}</Tags>
-        <MusicBox>
-          <FontAwesome name="music" size={15} color="#f5f5f5" />
-          <Music>{item.music}</Music>
-        </MusicBox>
+        <User>@{item.username}</User>
+        <Tags>{item.caption}</Tags>
       </Details>
       <Actions>
         <BoxAction>
           <AntDesign
-            style={{ alignSelf: 'center' }}
-            name="heart"
+            style={{ alignSelf: 'center', color: "green" }}
+            name="caretup"
             size={35}
             color="#fff"
           />
-          <TextAction>{item.likes}</TextAction>
+          <TextAction>Upvote</TextAction>
         </BoxAction>
-        <BoxAction>
-          <FontAwesome
-            style={{ alignSelf: 'center' }}
-            name="commenting"
+        <BoxAction onPress={() => {console.log("Downvoted")}}>
+          <AntDesign
+            style={{ alignSelf: 'center', color: "red" }}
+            name="caretdown"
             size={35}
             color="#fff"
           />
-          <TextAction>{item.comments}</TextAction>
-        </BoxAction>
-        <BoxAction>
-          <FontAwesome
-            style={{ alignSelf: 'center' }}
-            name="whatsapp"
-            size={35}
-            color="#06d755"
-          />
-          <TextAction>Share</TextAction>
-        </BoxAction>
-        <BoxAction>
-          <Animated.View
-            style={{
-              borderRadius: 50,
-              borderWidth: 12,
-              borderColor: '#292929',
-              // transform: [
-              //   {
-              //     rotate: play ? rotateProp : 0,
-              //   },
-              // ],
-            }}
-          >
-            <Image
-              style={{
-                width: 35,
-                height: 35,
-                borderRadius: 25,
-              }}
-              source={{
-                uri: 'https://avatars3.githubusercontent.com/u/45601574',
-              }}
-            />
-          </Animated.View>
-
-          <Lottie
-            source={musicFly}
-            progress={play ? spinValue : 0}
-            style={{ width: 150, position: 'absolute', bottom: 0, right: 0 }}
-          />
+          <TextAction>Downvote</TextAction>
         </BoxAction>
       </Actions>
       <LinearGradient

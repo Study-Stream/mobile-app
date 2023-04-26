@@ -1,57 +1,75 @@
 import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { useAuth0 } from 'react-native-auth0';
-
-import { MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons';
-
 import Field from '../../components/Field';
-
-import {
-  Container,
-  Title,
-  Content,
-  SmallText,
-  SignInButton,
-  LinkText,
-  SignInColumn,
-  SignInColumnText,
-  GradientBackground,
-} from './styles';
+import { Container, Title, SmallText, MainContent } from './styles';
+import { Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { joinCourse } from '../../api';
+import { useAuth0 } from 'react-native-auth0';
+import Loading from '../../components/Loading';
 
 const CourseJoin: React.FC = () => {
-  // better way to write this, but will change this later
-  const [course, setCourseName] = useState('');
-  const [courseNumber, setCourseNumber] = useState('');
-  const [courseDescription, setCourseDescription] = useState('');
+  const navigation = useNavigation();
+  const { user } = useAuth0();
+
+  const [joinCode, setJoinCode] = useState('');
+
+  const [loading, setLoading] = useState(false);
+
+  // function to join course
+  const joinCourseHelper = async () => {
+    console.log('Joining Course: ', joinCode, user.email);
+
+    await joinCourse(user.email, joinCode).then(res => {
+      navigation.navigate('CourseDashboard');
+    });
+  };
 
   return (
     <>
       <Container>
+        <Loading isVisible={loading} />
         <ScrollView>
-          <Content>
-            <Title>Create Course 🍎</Title>
+          <MainContent style={{ marginTop: 15 }}>
+            <Title>Join Course 🍎</Title>
             <SmallText>
-              Fill out some basic information so you can start sharing clips and
-              inviting other students to your course
+              If you have a join code, enter it below and join the class
             </SmallText>
             <Field
-              placeholder="Course Name"
-              onChangeText={newText => setCourseName(newText)}
+              placeholder="Enter Join Code"
+              onChangeText={newText => setJoinCode(newText)}
             />
-            <Field
-              placeholder="Course Number"
-              onChangeText={newText => setCourseNumber(newText)}
-            />
-            <Field
-              placeholder="Course Description"
-              onChangeText={newText => setCourseDescription(newText)}
-            />
-            <SignInColumn>
-              <SignInButton>
-                <SignInColumnText>Create Course</SignInColumnText>
-              </SignInButton>
-            </SignInColumn>
-          </Content>
+            <Button
+              mode="contained"
+              onPress={joinCourseHelper}
+              color="#000"
+              labelStyle={{ color: '#fff' }}
+              style={{
+                borderRadius: 25,
+                width: '50%',
+                marginTop: 10,
+                marginBottom: 10,
+              }}
+            >
+              Lets Go
+            </Button>
+            {/* Create a course button  */}
+            <Button
+              mode="outlined"
+              onPress={() => navigation.navigate('CourseCreate')}
+              color="#fff"
+              labelStyle={{
+                color: '#000',
+              }}
+              style={{
+                borderColor: '#000',
+                borderRadius: 25,
+                width: '75%',
+              }}
+            >
+              Create a Course instead
+            </Button>
+          </MainContent>
         </ScrollView>
       </Container>
     </>
