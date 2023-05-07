@@ -22,7 +22,7 @@ const Home = ({ route }: any) => {
       const postsWithVideoUrls = await Promise.all(
         res.course.posts.map(async (post: any) => {
           const videoUrl = await getVideoUri(post.url);
-          return { ...post, url: videoUrl.video };
+          return { ...post, uri: post.url, url: videoUrl.video, };
         }),
       );
       setPosts(postsWithVideoUrls);
