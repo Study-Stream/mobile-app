@@ -147,7 +147,7 @@ const Login: React.FC = () => {
         >
           Get Started
         </Button> : null}
-        <Button
+        {/* <Button
           onPress={onLogout }
           mode="contained"
           labelStyle={{ color: 'black' }}
@@ -159,7 +159,7 @@ const Login: React.FC = () => {
           }}
         >
           Logout
-        </Button>
+        </Button> */}
       </View>
     </View>
   );

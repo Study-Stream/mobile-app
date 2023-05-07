@@ -93,3 +93,15 @@ export const deleteCourseFromUser = async (email: any, courseId: any) => {
     .then(response => response.json());
 
 }
+
+// add post to course 
+export const addPostToCourse = async (courseId: any, post: any) => {
+  return await fetch(`${api_url}/courses/add-post?courseId=${courseId}`, {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(post),
+    redirect: 'follow'
+  })
+    .then(response => response.json());
+
+}

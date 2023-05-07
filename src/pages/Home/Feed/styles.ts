@@ -18,18 +18,26 @@ export const Details = styled.View`
 `;
 
 export const User = styled.Text`
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 800;
   padding: 10px 0;
   color: #fff;
 `;
 
 export const Tags = styled.Text`
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
   line-height: 22px;
   padding: 5px 0;
   color: #fff;
+`;
+
+export const Link = styled.Text`
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 22px;
+  padding: 5px 0;
+  color: grey;
 `;
 export const MusicBox = styled.View`
   flex-direction: row;

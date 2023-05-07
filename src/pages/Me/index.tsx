@@ -161,6 +161,7 @@ const Me: React.FC = () => {
   }, [user]);
 
   const numCards = userPosts.length;
+  const numRows = Math.ceil(numCards / 2);
 
   const [modalVisible, setModalVisible] = useState(false);
   const LogouteModal = ({ courseId }: any) => {
@@ -222,8 +223,8 @@ const Me: React.FC = () => {
         <Text
           style={{
             color: 'white',
-            fontSize: 16,
-            fontWeight: '800',
+            fontSize: 13,
+            fontWeight: '500',
             textAlign: 'center',
             // textDecorationLine: 'underline',
           }}
@@ -234,7 +235,7 @@ const Me: React.FC = () => {
           style={{
             color: 'white',
             fontSize: 14,
-            fontWeight: '400',
+            fontWeight: '700',
             textAlign: 'center',
             marginBottom: 5,
           }}
@@ -244,8 +245,8 @@ const Me: React.FC = () => {
         <Text
           style={{
             color: 'white',
-            fontSize: 16,
-            fontWeight: '800',
+            fontSize: 13,
+            fontWeight: '400',
             textAlign: 'center',
             // textDecorationLine: 'underline',
           }}
@@ -256,7 +257,7 @@ const Me: React.FC = () => {
           style={{
             color: 'white',
             fontSize: 14,
-            fontWeight: '400',
+            fontWeight: '600',
             textAlign: 'center',
             marginBottom: 5,
           }}
@@ -304,14 +305,13 @@ const Me: React.FC = () => {
           </ProfileColumn>
 
           <View style={styles.scrollableCardView}>
-            {[...Array(numCards)].map((_, rowIndex) => {
+            {[...Array(numRows)].map((_, rowIndex) => {
               const startIndex = rowIndex * 2;
               const endIndex = Math.min(startIndex + 2, numCards);
 
               return (
                 <View key={rowIndex}>
                   {userPosts.slice(startIndex, endIndex).map((card: any) => {
-                    console.log('card-id', card.id);
                     return (
                       <Card
                         key={card._id}
