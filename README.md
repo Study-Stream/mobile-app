@@ -14,7 +14,10 @@ $ npm install
 npm run start
 
 Select a simulator or device to run on
-```
+
+Update the url for the api in the api.ts file at the top.
+If you are running this project directly from your phone, you will need to utilize ngrok to create a tunnel to your local machine.
+
 ```
 
 
